@@ -354,6 +354,47 @@ export async function extractBranding(url: string, spinner: Spinner, browser: Br
       delete (window as any).cdc_adoQpoasnfa76pfcZLmcfl_Array;
       delete (window as any).cdc_adoQpoasnfa76pfcZLmcfl_Promise;
       delete (window as any).cdc_adoQpoasnfa76pfcZLmcfl_Symbol;
+
+      // Stable-within-session noise: same fingerprint hash on every read per page load,
+      // varies across runs. Real hardware is deterministic; Math.random() per-read is not.
+      const _sessionSeed = Math.random();
+      function sessionNoise(index: number): number {
+        const x = Math.sin(_sessionSeed * 9301 + index * 49297 + 233720) * 10000;
+        return 1e-7 + (x - Math.floor(x)) * 9e-7;
+      }
+
+      // WebGL: headless reports SwiftShader — spoof a plausible GPU string.
+      // NVIDIA RTX 3060 on ANGLE/D3D11 is among the most common desktop profiles globally.
+      function patchWebGLGetParameter(proto: WebGLRenderingContext) {
+        const orig = proto.getParameter;
+        proto.getParameter = function(param: number) {
+          if (param === 37445) return 'Google Inc. (NVIDIA)';
+          if (param === 37446) return 'ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Direct3D11 vs_5_0 ps_5_0, D3D11)';
+          return orig.call(this, param);
+        };
+      }
+      patchWebGLGetParameter(WebGLRenderingContext.prototype);
+      if (typeof WebGL2RenderingContext !== 'undefined') {
+        patchWebGLGetParameter(WebGL2RenderingContext.prototype as unknown as WebGLRenderingContext);
+      }
+
+      // Audio fingerprint: OfflineAudioContext hash differs in headless — add stable noise.
+      // Wraps startRendering so only fingerprinting renders see noise; regular AudioBuffer
+      // usage (game audio, music players) is unaffected. Noise is session-stable so
+      // consecutive reads from the same page produce the same hash.
+      if (typeof OfflineAudioContext !== 'undefined') {
+        const origStartRendering = OfflineAudioContext.prototype.startRendering;
+        OfflineAudioContext.prototype.startRendering = function() {
+          const result = origStartRendering.call(this);
+          return result.then((buffer: AudioBuffer) => {
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < Math.min(data.length, 20); i++) {
+              data[i] += sessionNoise(i);
+            }
+            return buffer;
+          });
+        };
+      }
     }, { loc: stealthLocale, sw: screenW, sh: screenH });
   }
 
