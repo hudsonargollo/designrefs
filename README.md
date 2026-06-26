@@ -96,6 +96,7 @@ dembrandt example.com --sitemap        # Discover pages from sitemap.xml instead
 dembrandt example.com --crawl 10 --sitemap # Combine: up to 10 pages discovered via sitemap
 dembrandt example.com --no-sandbox     # Disable Chromium sandbox (required for Docker/CI)
 dembrandt example.com --key dmb_···   # Push snapshot to your Dembrandt account; auto-scored against the previous snapshot for that domain
+                                       # DEMBRANDT_API_URL env var overrides the upload endpoint (default: https://www.dembrandt.com)
 dembrandt example.com --browser=firefox # Use Firefox instead of Chromium (better for Cloudflare bypass)
 dembrandt example.com --wcag           # WCAG 2.1 contrast analysis — real DOM pairs, AA/AAA grades
 dembrandt example.com --stealth        # Opt-in anti-detection: navigator spoofing + human mouse simulation (use only when authorized)
