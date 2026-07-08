@@ -44,28 +44,6 @@ Or add to your project's `.mcp.json`:
 
 Available tools include `get_design_tokens`, `get_color_palette`, `get_typography`, `get_component_styles`, `get_surfaces`, `get_spacing`, and `get_brand_identity`, plus drift, report, and job-control tools.
 
-Pair with **[designrefs-skills](https://github.com/hudsonargollo/designrefs-skills)** to give your agent UX intelligence on top of extracted tokens — hierarchy, accessibility, interaction states, and a full 6-stage design pipeline orchestrator.
-
-```bash
-npx skills add hudsonargollo/designrefs-skills
-```
-
-## DesignRefs App (Beta)
-
-Load extractions, track token drift, and compare snapshots. **[designrefs.com/app](https://www.designrefs.com/app)**
-
-* **Automatic drift tracking from CI.** Generate an API key at [designrefs.com/app/api-keys](https://www.designrefs.com/app/api-keys), then pass `--key` to the CLI. Every run uploads a snapshot to your account and scores it against the previous one for that domain. Wire into GitHub Actions or any CI runner and every deploy records itself.
-* **Pin a baseline.** Mark any snapshot as your reference. Every subsequent extraction is automatically scored against it.
-* **Visual diff.** Color swatches, before/after values, delta scores per category: colors, typography, spacing, radius, shadows.
-* **Snapshot timeline.** Proportional timeline per domain — scrub across any date range from days to years.
-* **Compare side by side.** Load multiple extractions into one view: two releases, two sites, or two surfaces.
-* **Copy tokens.** Paste values straight into Copilot, Claude, or Cursor.
-* **No login required for local use.** Data stays in the browser. Sign in with GitHub to enable cloud sync.
-
-## Recipes
-
-**[designrefs.com/recipes](https://www.designrefs.com/recipes)** — ready-to-run workflows. Copy a command, paste a prompt, get a result. Covers competitor benchmarking, WCAG audits, CI/CD drift detection, Figma token push, and agentic design system builds. Filterable by role.
-
 ## What to expect from extraction?
 
 - Colors (semantic, palette, CSS variables, gradients)
@@ -95,8 +73,8 @@ designrefs designrefs.com --crawl 5       # Analyze 5 pages (homepage + 4 discov
 designrefs designrefs.com --sitemap       # Discover pages from sitemap.xml instead of DOM links
 designrefs designrefs.com --crawl 10 --sitemap # Combine: up to 10 pages discovered via sitemap
 designrefs designrefs.com --no-sandbox    # Disable Chromium sandbox (required for Docker/CI)
-designrefs designrefs.com --key dmb_···  # Push snapshot to your DesignRefs account; auto-scored against the previous snapshot for that domain
-                                       # DESIGNREFS_API_URL env var overrides the upload endpoint (default: https://www.designrefs.com)
+designrefs designrefs.com --key dmb_···  # Push a snapshot to a DesignRefs-compatible API (self-hosted; no public instance is provided by this project)
+                                       # Set DESIGNREFS_API_URL to your endpoint; DESIGNREFS_KEY env var can supply the key instead of --key
 designrefs designrefs.com --browser=firefox # Use Firefox instead of Chromium (better for Cloudflare bypass)
 designrefs designrefs.com --wcag          # WCAG 2.1 contrast analysis — real DOM pairs, AA/AAA grades
 designrefs designrefs.com --stealth       # Opt-in anti-detection: navigator spoofing + human mouse simulation (use only when authorized)
@@ -410,7 +388,7 @@ DesignRefs does not host, redistribute, or claim rights to any third-party brand
 
 ## Sponsors
 
-The CLI is MIT-licensed and free. Sponsorship funds the enforcement layer: a committed project-level token baseline, `--compare` and the ingest API for CI/CD drift gates, and the App platform (snapshot history, team drift dashboard, alerts to Slack, Linear, and GitHub).
+The CLI is MIT-licensed and free. Sponsorship funds ongoing maintenance and development, including the `--compare` drift gate and MCP tooling.
 
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-me-pink?style=flat&logo=github-sponsors)](https://github.com/sponsors/hudsonargollo)
 
@@ -424,6 +402,6 @@ Bugs, weird sites, pull requests. All welcome.
 
 Open an [Issue](https://github.com/hudsonargollo/designrefs/issues) or PR.
 
-@thevangelist
+Maintained by [@hudsonargollo](https://github.com/hudsonargollo). Forked from dembrandt by thevangelist.
 
 MIT. Do whatever you want with it.
