@@ -15,7 +15,7 @@ function fixture(overrides: any = {}): any {
   return {
     url: 'https://example.com/',
     extractedAt: '2026-06-13T00:00:00.000Z',
-    meta: { schemaVersion: '1.1.0', dembrandtVersion: '0.18.0' },
+    meta: { schemaVersion: '1.1.0', designrefsVersion: '0.18.0' },
     colors: {
       palette: [
         { color: '#133174', normalized: '#133174', count: 40, confidence: 'high' },

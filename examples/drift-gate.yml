@@ -12,7 +12,7 @@
 # PR comment) is GitHub-specific; the same extract → compare → branch core maps
 # to GitLab CI, Jenkins, or Azure DevOps.
 #
-# Requires dembrandt 0.19.4+ (ships --compare, --approve, and the drift report
+# Requires designrefs 0.19.4+ (ships --compare, --approve, and the drift report
 # under a `drift` key in --json-only). Installed locally so the matching browser
 # (playwright-core) resolves automatically.
 
@@ -41,12 +41,12 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install dembrandt + Chromium
+      - name: Install designrefs + Chromium
         # Local install pulls playwright-core (the pinned browser driver) as a
         # regular dependency; fetch the browser binary via its own installer.
         # Avoids the version-mismatch pitfall of installing `playwright` globally.
         run: |
-          npm i dembrandt
+          npm i designrefs
           npx playwright-core install --with-deps chromium
 
       - name: Drift gate — preview vs production
@@ -62,13 +62,13 @@ jobs:
             name="${entry%%:*}"; path="${entry#*:}"
             echo "-> $name ($path)"
             # production is the pinned baseline: any token change in the PR shows as drift
-            if ! npx dembrandt "${PROD}${path}" --json-only > "reports/${name}.baseline.json" 2> "reports/${name}.prod.log"; then
+            if ! npx designrefs "${PROD}${path}" --json-only > "reports/${name}.baseline.json" 2> "reports/${name}.prod.log"; then
               echo "::error title=Baseline failed::${name} (${path}) prod extraction failed"
               echo "| \`${path}\` | ⚠️ | prod extract failed |" >> reports/_rows.md
               fail=1; continue
             fi
             # --html for the artifact; --json-only carries the structured drift report
-            npx dembrandt "${PREVIEW}${path}" "${HDR[@]}" \
+            npx designrefs "${PREVIEW}${path}" "${HDR[@]}" \
               --compare "reports/${name}.baseline.json" --html "reports/${name}.html" --json-only \
               > "reports/${name}.json" 2> "reports/${name}.log"
             code=$?
@@ -132,7 +132,7 @@ jobs:
               echo "</details>"
             fi
             echo ""
-            echo "Accept intended changes locally: \`dembrandt <url> --compare <baseline.json> --approve\`"
+            echo "Accept intended changes locally: \`designrefs <url> --compare <baseline.json> --approve\`"
             echo ""
             echo "<sub>In **What changed**: \`~\` changed · \`+\` added · \`-\` removed token vs production. The gate fails when a page drifts beyond its threshold. Full HTML reports: **drift-reports** artifact on this run.</sub>"
           } > "$SUMMARY"

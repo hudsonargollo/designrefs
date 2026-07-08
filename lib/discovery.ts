@@ -107,7 +107,7 @@ export async function discoverLinks(page, baseUrl, maxPages) {
 }
 
 const FETCH_OPTS = {
-  headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Dembrandt/1.0)' },
+  headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DesignRefs/1.0)' },
 };
 
 /**

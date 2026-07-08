@@ -17,13 +17,13 @@
   "notes": "",
   "meta": {
     "primary": {
-      "verdict": "in_palette_dembrandt_missed",
-      "dembrandtWasWrong": true,
+      "verdict": "in_palette_designrefs_missed",
+      "designrefsWasWrong": true,
       "source": "palette"
     },
     "secondary": {
-      "verdict": "in_palette_dembrandt_missed",
-      "dembrandtWasWrong": true,
+      "verdict": "in_palette_designrefs_missed",
+      "designrefsWasWrong": true,
       "source": "palette"
     },
     "brandPalette": {
@@ -42,7 +42,7 @@
     },
     "logoUrl": {
       "verdict": "added",
-      "dembrandtCandidatesExhausted": true,
+      "designrefsCandidatesExhausted": true,
       "comment": "logo",
       "source": "pasted-url"
     },

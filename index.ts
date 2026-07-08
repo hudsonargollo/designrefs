@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Dembrandt - Design Token Extraction CLI
+ * DesignRefs - Design Token Extraction CLI
  *
  * Extracts design tokens, brand colors, typography, spacing, and component styles
  * from any website using Playwright.
@@ -44,7 +44,7 @@ function spinnerOptions(useStderr = false) {
 }
 
 program
-  .name("dembrandt")
+  .name("designrefs")
   .description("Extract design tokens from any website.")
   .version(version)
   .enablePositionalOptions()
@@ -60,7 +60,7 @@ program
   .option("--brand-guide", "Export a brand guide PDF")
   .option("--design-md", "Export a DESIGN.md file")
   .option("--html [path]", "Write a self-contained HTML report (default: output/<domain>/<timestamp>.html)")
-  .option("--compare <baseline>", "Drift-compare against a baseline: a local JSON file, or an App baseline id (posts to the .dembrandtrc endpoint, default dembrandt.com). Exits 1 on drift.")
+  .option("--compare <baseline>", "Drift-compare against a baseline: a local JSON file, or an App baseline id (posts to the .designrefsrc endpoint, default designrefs.com). Exits 1 on drift.")
   .option("--approve", "With --compare <file>: accept the current extraction as the new baseline by overwriting that local file, and pass instead of failing. Ignored for App baseline ids.")
   .option("--no-sandbox", "Disable browser sandbox (needed for Docker/CI)")
   .option("--raw-colors", "Include pre-filter raw colors in JSON output")
@@ -83,7 +83,7 @@ program
   .option("--locale <string>", "Browser locale for fingerprint, e.g. en-GB, fi-FI; affects content only if the site reacts to Accept-Language (default: en-US)")
   .option("--timezone <string>", "Browser timezone for fingerprint, e.g. Europe/Helsinki; affects content only if the site reacts to timezone (default: America/New_York)")
   .option("--accept-language <string>", "Custom Accept-Language header value")
-  .option("--key <string>", "Dembrandt API key for syncing extractions to your account (falls back to DEMBRANDT_KEY env var)")
+  .option("--key <string>", "DesignRefs API key for syncing extractions to your account (falls back to DESIGNREFS_KEY env var)")
   .option("--screen-size <WxH>", "Physical screen resolution to report, e.g. 1920x1080 (default: 1920x1080)")
   .action(async (input, paths, opts) => {
     let url = input;
@@ -92,7 +92,7 @@ program
     }
 
     // Resolve API key: --key flag takes precedence over env var
-    const apiKey: string | undefined = opts.key ?? process.env.DEMBRANDT_KEY;
+    const apiKey: string | undefined = opts.key ?? process.env.DESIGNREFS_KEY;
 
     if (opts.approve && !opts.compare) {
       console.error(color.warning("! --approve has no effect without --compare <file>."));
@@ -175,7 +175,7 @@ program
             verbose: !opts.jsonOnly,
             darkMode: opts.darkMode,
             mobile: opts.mobile,
-            reveal: !process.env.DEMBRANDT_DISABLE_REVEAL,
+            reveal: !process.env.DESIGNREFS_DISABLE_REVEAL,
             slow: opts.slow,
             screenshotPath: opts.screenshot,
             discoverLinks: isAutoCrawl ? crawlN - 1 : null,
@@ -239,7 +239,7 @@ program
                   verbose: !opts.jsonOnly,
                   darkMode: opts.darkMode,
                   mobile: opts.mobile,
-                  reveal: !process.env.DEMBRANDT_DISABLE_REVEAL,
+                  reveal: !process.env.DESIGNREFS_DISABLE_REVEAL,
                   slow: opts.slow,
                   stealth: opts.stealth,
                   userAgent: opts.userAgent,
@@ -425,12 +425,12 @@ program
       let driftReport;
       if (opts.compare) {
         try {
-          // The App endpoint for baseline-id compares comes from .dembrandtrc.
+          // The App endpoint for baseline-id compares comes from .designrefsrc.
           let apiBase;
           try {
-            const rc = JSON.parse(readFileSync(join(process.cwd(), ".dembrandtrc"), "utf-8"));
+            const rc = JSON.parse(readFileSync(join(process.cwd(), ".designrefsrc"), "utf-8"));
             if (typeof rc.endpoint === "string") apiBase = rc.endpoint;
-          } catch { /* no .dembrandtrc, or unreadable — use the default */ }
+          } catch { /* no .designrefsrc, or unreadable — use the default */ }
           const { report, source, mode } = await resolveCompare(opts.compare, result, apiBase ? { api: apiBase } : {});
           driftReport = report;
           const verdict = report.status === "drift"
@@ -506,7 +506,7 @@ program
         }
       }
 
-      // Sync to cloud if --key / DEMBRANDT_KEY is set
+      // Sync to cloud if --key / DESIGNREFS_KEY is set
       if (apiKey) {
         try {
           const payload = JSON.stringify(result);
@@ -515,7 +515,7 @@ program
           if (byteSize > MAX_BYTES) {
             console.error(color.warning(`! Extraction too large to sync (${byteSize} bytes > ${MAX_BYTES}). Skipping cloud upload.`));
           } else {
-            const apiBase = process.env.DEMBRANDT_API_URL ?? "https://www.dembrandt.com";
+            const apiBase = process.env.DESIGNREFS_API_URL ?? "https://www.designrefs.com";
             const syncRes = await fetch(`${apiBase}/api/extractions`, {
               method: "POST",
               headers: {

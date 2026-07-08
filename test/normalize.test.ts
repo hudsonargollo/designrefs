@@ -9,7 +9,7 @@ import { stripTransient, normalizeExtraction } from '../lib/normalize.js';
 const base: any = {
   url: 'https://x.com/',
   extractedAt: '2026-01-01T00:00:00.000Z',
-  meta: { dembrandtVersion: '0.16.0', schemaVersion: '1.0.0' },
+  meta: { designrefsVersion: '0.16.0', schemaVersion: '1.0.0' },
   colors: { palette: [], semantic: {}, cssVariables: {} },
   typography: {
     styles: [{ context: 'body', family: 'Inter', size: '16px', weight: '700' }],

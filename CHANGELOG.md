@@ -3,7 +3,7 @@
 ## [0.21.0] - 2026-06-29
 
 ### Changed
-- Hidden-content reveal (open click-toggle menus/dropdowns, advance carousels, then re-scan) is now standard and on by default. Closed panels and off-screen slides hold brand colours that the static scan never sees, so this materially improves colour recall. Set `DEMBRANDT_DISABLE_REVEAL=1` to skip it, which QA baselines do to stay deterministic
+- Hidden-content reveal (open click-toggle menus/dropdowns, advance carousels, then re-scan) is now standard and on by default. Closed panels and off-screen slides hold brand colours that the static scan never sees, so this materially improves colour recall. Set `DESIGNREFS_DISABLE_REVEAL=1` to skip it, which QA baselines do to stay deterministic
 - Colour extraction recovers card/section/input/badge colours previously lost to structural filtering, and lifts colours from ancestor context, footers, and carousel-revealed panels (DEM-68)
 
 ### Added
@@ -19,12 +19,12 @@
 
 ### Fixed
 - Near-white primary and transparent secondary colours are guarded against, so washed-out or invisible picks no longer surface as brand colours (DEM-112, DEM-113, #103)
-- Cloud upload targets `www.dembrandt.com` and is overridable via the `DEMBRANDT_API_URL` env var
+- Cloud upload targets `www.designrefs.com` and is overridable via the `DESIGNREFS_API_URL` env var
 
 ## [0.20.0] - 2026-06-23
 
 ### Added
-- `--key` pushes each extraction to your Dembrandt account and auto-scores it against the previous snapshot for that domain (#105)
+- `--key` pushes each extraction to your DesignRefs account and auto-scores it against the previous snapshot for that domain (#105)
 - `--ai` predicts the brand primary colour with a trained ML model, replacing the heuristic when enabled (roughly 2x accuracy)
 - Platform-specific colour hints: `theme-color`, `mask-icon`, and `msapplication` meta values now feed the palette (#101)
 

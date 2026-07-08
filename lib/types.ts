@@ -1,5 +1,5 @@
 /**
- * Shared types for dembrandt extraction output and CLI options.
+ * Shared types for designrefs extraction output and CLI options.
  * These were JSDoc @typedefs; promoted to real exported interfaces so the rest
  * of the (now TypeScript) codebase can import and use them.
  */
@@ -293,7 +293,7 @@ export interface WcagPair {
 /** Metadata block on the native extraction output. */
 export interface ExtractionMeta {
   /** Provenance: the CLI release that produced this. Doubles as source.cliVersion. */
-  dembrandtVersion?: string | null;
+  designrefsVersion?: string | null;
   /**
    * Output contract version. Required: the current producer always stamps it.
    * Consumers key migrations off this (absent in a persisted blob = pre-1.0) and
@@ -365,7 +365,7 @@ export interface BrandingResult {
  * user-facing annotations live HERE, never on the payload — putting them on the
  * payload would mutate the immutable extraction and break drift comparison.
  *
- * This type is reserved for the storage/UI layer (dembrandt-next, drift). The CLI
+ * This type is reserved for the storage/UI layer (designrefs-next, drift). The CLI
  * does not produce it; it is defined in core so every consumer agrees on one
  * envelope shape instead of forking it. Build the notes/labels feature against
  * `note`/`label` here — not against BrandingResult.note (which is CLI metadata).
@@ -406,7 +406,7 @@ export interface ExtractOptions {
   mobile?: boolean;
   /** Reveal hidden content (open click-toggle menus/dropdowns, advance carousels)
    *  and re-scan for colors. Standard behaviour, on by default; set false to skip
-   *  (used for deterministic QA baselines via the DEMBRANDT_DISABLE_REVEAL env var). */
+   *  (used for deterministic QA baselines via the DESIGNREFS_DISABLE_REVEAL env var). */
   reveal?: boolean;
   stealth?: boolean;
   wcag?: boolean;
@@ -425,6 +425,6 @@ export interface ExtractOptions {
   header?: string;
   /** Internal: collect raw :root tokens + interactive-state styles to a sidecar. */
   teach?: boolean;
-  /** Injected CLI version, surfaced as meta.dembrandtVersion. */
+  /** Injected CLI version, surfaced as meta.designrefsVersion. */
   _version?: string;
 }

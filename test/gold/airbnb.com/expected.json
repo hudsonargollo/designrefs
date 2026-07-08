@@ -42,7 +42,7 @@
     },
     "logoUrl": {
       "verdict": "skipped",
-      "dembrandtCandidatesExhausted": true
+      "designrefsCandidatesExhausted": true
     },
     "primaryFont": {
       "verdict": "skipped"

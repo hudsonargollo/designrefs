@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 /**
- * Dembrandt MCP Server
+ * DesignRefs MCP Server
  *
  * Extract design tokens from any live website. Works with Claude Code, Cursor,
  * Windsurf, and any MCP-compatible client.
  *
  * Install:
- *   claude mcp add --transport stdio dembrandt -- npx -y --package dembrandt dembrandt-mcp
+ *   claude mcp add --transport stdio designrefs -- npx -y --package designrefs designrefs-mcp
  */
 
 import { readFileSync } from "node:fs";
@@ -256,7 +256,7 @@ async function main() {
     process.exit(1);
   }
 
-  const server = new McpServer({ name: "dembrandt", version });
+  const server = new McpServer({ name: "designrefs", version });
 
   // ── Shared params ──────────────────────────────────────────────────────
 
@@ -335,11 +335,11 @@ async function main() {
 
   // zod 4: z.record needs explicit key + value types; z.record(z.any()) treats
   // the lone arg as the KEY and leaves value undefined, which crashes tools/list.
-  const extract = z.record(z.string(), z.any()).describe("A dembrandt extraction object, as returned by get_design_tokens");
+  const extract = z.record(z.string(), z.any()).describe("A designrefs extraction object, as returned by get_design_tokens");
 
   (server.tool as any)(
     "compute_drift",
-    "Compare two dembrandt extractions and return a design-drift report: a 0-100 score (0 = identical), a stable/drift verdict, per-category scores, and the list of changed/added/removed tokens (colors, typography, spacing, radius, shadows). Pure and synchronous — no browser. Use it to check whether generated or updated UI has drifted from a brand baseline.",
+    "Compare two designrefs extractions and return a design-drift report: a 0-100 score (0 = identical), a stable/drift verdict, per-category scores, and the list of changed/added/removed tokens (colors, typography, spacing, radius, shadows). Pure and synchronous — no browser. Use it to check whether generated or updated UI has drifted from a brand baseline.",
     {
       baseline: extract,
       candidate: extract,
@@ -353,7 +353,7 @@ async function main() {
 
   (server.tool as any)(
     "render_report",
-    "Render a self-contained HTML report (inline CSS, no external resources) from a dembrandt extraction, optionally including a drift diff. Returns the HTML as text — write it to a .html file to open offline or attach as a CI artifact.",
+    "Render a self-contained HTML report (inline CSS, no external resources) from a designrefs extraction, optionally including a drift diff. Returns the HTML as text — write it to a .html file to open offline or attach as a CI artifact.",
     {
       result: extract,
       drift: z.any().optional().describe("A drift report from compute_drift, to render the diff banner"),

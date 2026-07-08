@@ -131,7 +131,7 @@ export function logoScore(expectedUrl, actualUrl, siteUrl = null) {
 
   if (expIsReference) {
     // Expected URL is on a brand-resource site, not the site itself.
-    // Can't compare URLs directly; verify dembrandt found a plausible logo.
+    // Can't compare URLs directly; verify designrefs found a plausible logo.
     if (actHost === siteHost) return 75;          // logo from the site's own domain: good
     if (actHost && actHost.endsWith('.' + siteHost)) return 70; // subdomain of site
     if (actHost) return 50;                       // logo from CDN or third party

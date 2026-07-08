@@ -3,7 +3,7 @@
   "extractedAt": "2026-06-11T00:00:00.000Z",
   "meta": {
     "schemaVersion": "1.2.0",
-    "dembrandtVersion": "0.17.0"
+    "designrefsVersion": "0.17.0"
   },
   "colors": {
     "semantic": {

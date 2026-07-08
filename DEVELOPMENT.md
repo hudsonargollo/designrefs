@@ -1,13 +1,13 @@
 # Development Guide
 
-This guide covers development workflows, testing, and contribution guidelines for Dembrandt.
+This guide covers development workflows, testing, and contribution guidelines for DesignRefs.
 
 ## Setup
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/dembrandt/dembrandt.git
-cd dembrandt
+git clone https://github.com/hudsonargollo/designrefs.git
+cd designrefs
 ```
 
 2. Install dependencies:
@@ -53,7 +53,7 @@ Compare output between the latest npm release and the main branch to catch regre
 ```
 
 **What it does:**
-1. Runs the latest npm release version (`npx dembrandt@latest`) against your domain
+1. Runs the latest npm release version (`npx designrefs@latest`) against your domain
 2. Runs the current main branch version against the same domain
 3. Compares the JSON outputs and shows differences
 4. Saves all outputs and diff to `test-output/<domain>-<timestamp>/`
@@ -117,7 +117,7 @@ Compare output between the latest npm release and the main branch to catch regre
 ## Project Structure
 
 ```
-dembrandt/
+designrefs/
 ├── index.js                      # CLI entry point
 ├── lib/
 │   ├── extractors.js            # Core extraction functions
@@ -166,8 +166,8 @@ The `npm_...` granular token bypasses the OTP prompt (`--otp` expects a 6-digit 
 
 5. **Verify:**
 ```bash
-npm view dembrandt version
-npx dembrandt@latest example.com
+npm view designrefs version
+npx designrefs@latest example.com
 ```
 
 6. **Create the GitHub release (for notes):**
@@ -321,6 +321,6 @@ cat output/example.com/latest.json | jq .
 
 ## Support
 
-- Issues: https://github.com/dembrandt/dembrandt/issues
-- Discussions: https://github.com/dembrandt/dembrandt/discussions
+- Issues: https://github.com/hudsonargollo/designrefs/issues
+- Discussions: https://github.com/hudsonargollo/designrefs/discussions
 - Email: info@esajuhana.com

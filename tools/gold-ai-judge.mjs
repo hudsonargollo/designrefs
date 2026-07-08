@@ -53,7 +53,7 @@ for (const p of providers) {
   if (p === 'claude' && !ANTHROPIC_KEY) { console.error('ANTHROPIC_API_KEY not set.'); process.exit(2); }
 }
 
-async function runDembrandt(url) {
+async function runDesignRefs(url) {
   const screenshotPath = resolve(tmpdir(), `judge-${Date.now()}.png`);
   return await new Promise((res, rej) => {
     const proc = spawn(process.execPath, [
@@ -232,7 +232,7 @@ async function judgeSite(url) {
   const providerLabel = providers.length === 1 ? providers[0] : 'both';
   console.log(`▸ judging ${domain} (${providerLabel})`);
   console.log(`  extracting...`);
-  const extraction = await runDembrandt(url);
+  const extraction = await runDesignRefs(url);
   const screenshot = await readFile(extraction._screenshotPath);
   const hash = createHash('sha256').update(screenshot).digest('hex').slice(0, 12);
 

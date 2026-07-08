@@ -56,7 +56,7 @@ async function runExtraction(url) {
   if (extractionCache.has(url)) return extractionCache.get(url);
   const promise = (async () => {
     const ts = Date.now();
-    const screenshotPath = resolve(tmpdir(), `dembrandt-gold-${ts}.png`);
+    const screenshotPath = resolve(tmpdir(), `designrefs-gold-${ts}.png`);
     return await new Promise((res, rej) => {
       const proc = spawn(process.execPath, [
         resolve(ROOT, 'dist', 'index.js'),

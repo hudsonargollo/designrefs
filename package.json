@@ -1,13 +1,13 @@
 {
-  "name": "dembrandt",
+  "name": "designrefs",
   "version": "0.22.0",
   "description": "Extract design tokens and publicly visible CSS information from any website",
-  "mcpName": "io.github.dembrandt/dembrandt",
+  "mcpName": "io.github.hudsonargollo/designrefs",
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "dembrandt": "dist/index.js",
-    "dembrandt-mcp": "dist/mcp-server.js"
+    "designrefs": "dist/index.js",
+    "designrefs-mcp": "dist/mcp-server.js"
   },
   "exports": {
     ".": "./dist/index.js",
@@ -69,13 +69,16 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dembrandt/dembrandt.git"
+    "url": "git+https://github.com/hudsonargollo/designrefs.git"
   },
   "bugs": {
-    "url": "https://github.com/dembrandt/dembrandt/issues"
+    "url": "https://github.com/hudsonargollo/designrefs/issues"
   },
-  "homepage": "https://dembrandt.com",
-  "author": "thevangelist <info@esajuhana.com>",
+  "homepage": "https://designrefs.hudson-193.workers.dev",
+  "author": "Hudson Argollo",
+  "contributors": [
+    "thevangelist <info@esajuhana.com> (original author, dembrandt)"
+  ],
   "license": "MIT",
   "dependencies": {
     "chalk": "^5.3.0",

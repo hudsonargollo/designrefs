@@ -1,32 +1,32 @@
-# Dembrandt.
+# DesignRefs.
 
-[![npm version](https://img.shields.io/npm/v/dembrandt.svg)](https://www.npmjs.com/package/dembrandt)
-[![npm downloads](https://img.shields.io/npm/dm/dembrandt.svg)](https://www.npmjs.com/package/dembrandt)
-[![license](https://img.shields.io/npm/l/dembrandt.svg)](https://github.com/dembrandt/dembrandt/blob/main/LICENSE)
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-me-pink?style=flat&logo=github-sponsors)](https://github.com/sponsors/dembrandt)
+[![npm version](https://img.shields.io/npm/v/designrefs.svg)](https://www.npmjs.com/package/designrefs)
+[![npm downloads](https://img.shields.io/npm/dm/designrefs.svg)](https://www.npmjs.com/package/designrefs)
+[![license](https://img.shields.io/npm/l/designrefs.svg)](https://github.com/hudsonargollo/designrefs/blob/main/LICENSE)
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-me-pink?style=flat&logo=github-sponsors)](https://github.com/sponsors/hudsonargollo)
 
 Extract a website's design system into design tokens in a few seconds: logo, colors, typography, borders, and more. One command.
 
-![Dembrandt: Any website to design tokens](https://raw.githubusercontent.com/dembrandt/dembrandt/main/docs/images/banner.png)
+![DesignRefs: Any website to design tokens](https://raw.githubusercontent.com/hudsonargollo/designrefs/main/docs/images/banner.png)
 
 ## Install
 
-Install globally: `npm install -g dembrandt`
+Install globally: `npm install -g designrefs`
 
 ```bash
-dembrandt dembrandt.com
+designrefs designrefs.com
 ```
 
-Or use npx without installing: `npx dembrandt dembrandt.com`
+Or use npx without installing: `npx designrefs designrefs.com`
 
 Requires Node.js 18+
 
 ## AI Agent Integration (MCP)
 
-Use Dembrandt as a tool in Claude Code, Cursor, Windsurf, or any MCP-compatible client. Ask your agent to "extract the color palette from dembrandt.com" and it calls Dembrandt automatically.
+Use DesignRefs as a tool in Claude Code, Cursor, Windsurf, or any MCP-compatible client. Ask your agent to "extract the color palette from designrefs.com" and it calls DesignRefs automatically.
 
 ```bash
-claude mcp add --transport stdio dembrandt -- npx -y --package dembrandt dembrandt-mcp
+claude mcp add --transport stdio designrefs -- npx -y --package designrefs designrefs-mcp
 ```
 
 Or add to your project's `.mcp.json`:
@@ -34,9 +34,9 @@ Or add to your project's `.mcp.json`:
 ```json
 {
   "mcpServers": {
-    "dembrandt": {
+    "designrefs": {
       "command": "npx",
-      "args": ["-y", "--package", "dembrandt", "dembrandt-mcp"]
+      "args": ["-y", "--package", "designrefs", "designrefs-mcp"]
     }
   }
 }
@@ -44,17 +44,17 @@ Or add to your project's `.mcp.json`:
 
 Available tools include `get_design_tokens`, `get_color_palette`, `get_typography`, `get_component_styles`, `get_surfaces`, `get_spacing`, and `get_brand_identity`, plus drift, report, and job-control tools.
 
-Pair with **[dembrandt-skills](https://github.com/dembrandt/dembrandt-skills)** to give your agent UX intelligence on top of extracted tokens — hierarchy, accessibility, interaction states, and a full 6-stage design pipeline orchestrator.
+Pair with **[designrefs-skills](https://github.com/hudsonargollo/designrefs-skills)** to give your agent UX intelligence on top of extracted tokens — hierarchy, accessibility, interaction states, and a full 6-stage design pipeline orchestrator.
 
 ```bash
-npx skills add dembrandt/dembrandt-skills
+npx skills add hudsonargollo/designrefs-skills
 ```
 
-## Dembrandt App (Beta)
+## DesignRefs App (Beta)
 
-Load extractions, track token drift, and compare snapshots. **[dembrandt.com/app](https://www.dembrandt.com/app)**
+Load extractions, track token drift, and compare snapshots. **[designrefs.com/app](https://www.designrefs.com/app)**
 
-* **Automatic drift tracking from CI.** Generate an API key at [dembrandt.com/app/api-keys](https://www.dembrandt.com/app/api-keys), then pass `--key` to the CLI. Every run uploads a snapshot to your account and scores it against the previous one for that domain. Wire into GitHub Actions or any CI runner and every deploy records itself.
+* **Automatic drift tracking from CI.** Generate an API key at [designrefs.com/app/api-keys](https://www.designrefs.com/app/api-keys), then pass `--key` to the CLI. Every run uploads a snapshot to your account and scores it against the previous one for that domain. Wire into GitHub Actions or any CI runner and every deploy records itself.
 * **Pin a baseline.** Mark any snapshot as your reference. Every subsequent extraction is automatically scored against it.
 * **Visual diff.** Color swatches, before/after values, delta scores per category: colors, typography, spacing, radius, shadows.
 * **Snapshot timeline.** Proportional timeline per domain — scrub across any date range from days to years.
@@ -64,7 +64,7 @@ Load extractions, track token drift, and compare snapshots. **[dembrandt.com/app
 
 ## Recipes
 
-**[dembrandt.com/recipes](https://www.dembrandt.com/recipes)** — ready-to-run workflows. Copy a command, paste a prompt, get a result. Covers competitor benchmarking, WCAG audits, CI/CD drift detection, Figma token push, and agentic design system builds. Filterable by role.
+**[designrefs.com/recipes](https://www.designrefs.com/recipes)** — ready-to-run workflows. Copy a command, paste a prompt, get a result. Covers competitor benchmarking, WCAG audits, CI/CD drift detection, Figma token push, and agentic design system builds. Filterable by role.
 
 ## What to expect from extraction?
 
@@ -81,29 +81,29 @@ Load extractions, track token drift, and compare snapshots. **[dembrandt.com/app
 ## Usage
 
 ```bash
-dembrandt <url>                        # Basic extraction (terminal display only)
-dembrandt dembrandt.com --json-only     # Output raw JSON to terminal (no formatted display, no file save)
-dembrandt dembrandt.com --save-output   # Save JSON to output/dembrandt.com/YYYY-MM-DDTHH-MM-SS.json
-dembrandt dembrandt.com --dtcg          # Export in W3C Design Tokens (DTCG) format (auto-saves as .tokens.json)
-dembrandt dembrandt.com --dark-mode     # Extract colors from dark mode variant
-dembrandt dembrandt.com --mobile        # Use mobile viewport (390x844) for responsive analysis
-dembrandt dembrandt.com --slow          # 3x longer timeouts (24s hydration) for JavaScript-heavy sites
-dembrandt dembrandt.com --brand-guide   # Generate a brand guide PDF
-dembrandt dembrandt.com --design-md     # Generate a DESIGN.md file for AI agents
-dembrandt dembrandt.com /pricing /docs  # Extract specific paths and merge results into one output
-dembrandt dembrandt.com --crawl 5       # Analyze 5 pages (homepage + 4 discovered pages), merges results
-dembrandt dembrandt.com --sitemap       # Discover pages from sitemap.xml instead of DOM links
-dembrandt dembrandt.com --crawl 10 --sitemap # Combine: up to 10 pages discovered via sitemap
-dembrandt dembrandt.com --no-sandbox    # Disable Chromium sandbox (required for Docker/CI)
-dembrandt dembrandt.com --key dmb_···  # Push snapshot to your Dembrandt account; auto-scored against the previous snapshot for that domain
-                                       # DEMBRANDT_API_URL env var overrides the upload endpoint (default: https://www.dembrandt.com)
-dembrandt dembrandt.com --browser=firefox # Use Firefox instead of Chromium (better for Cloudflare bypass)
-dembrandt dembrandt.com --wcag          # WCAG 2.1 contrast analysis — real DOM pairs, AA/AAA grades
-dembrandt dembrandt.com --stealth       # Opt-in anti-detection: navigator spoofing + human mouse simulation (use only when authorized)
-dembrandt dembrandt.com --locale fi-FI --timezone Europe/Helsinki # Browser fingerprint: locale and timezone
-dembrandt dembrandt.com --user-agent "Mozilla/5.0 ..."           # Custom user agent string
-dembrandt dembrandt.com --accept-language "fi,en;q=0.9"          # Custom Accept-Language header
-dembrandt dembrandt.com --screen-size 2560x1440                  # Physical screen resolution to report
+designrefs <url>                        # Basic extraction (terminal display only)
+designrefs designrefs.com --json-only     # Output raw JSON to terminal (no formatted display, no file save)
+designrefs designrefs.com --save-output   # Save JSON to output/designrefs.com/YYYY-MM-DDTHH-MM-SS.json
+designrefs designrefs.com --dtcg          # Export in W3C Design Tokens (DTCG) format (auto-saves as .tokens.json)
+designrefs designrefs.com --dark-mode     # Extract colors from dark mode variant
+designrefs designrefs.com --mobile        # Use mobile viewport (390x844) for responsive analysis
+designrefs designrefs.com --slow          # 3x longer timeouts (24s hydration) for JavaScript-heavy sites
+designrefs designrefs.com --brand-guide   # Generate a brand guide PDF
+designrefs designrefs.com --design-md     # Generate a DESIGN.md file for AI agents
+designrefs designrefs.com /pricing /docs  # Extract specific paths and merge results into one output
+designrefs designrefs.com --crawl 5       # Analyze 5 pages (homepage + 4 discovered pages), merges results
+designrefs designrefs.com --sitemap       # Discover pages from sitemap.xml instead of DOM links
+designrefs designrefs.com --crawl 10 --sitemap # Combine: up to 10 pages discovered via sitemap
+designrefs designrefs.com --no-sandbox    # Disable Chromium sandbox (required for Docker/CI)
+designrefs designrefs.com --key dmb_···  # Push snapshot to your DesignRefs account; auto-scored against the previous snapshot for that domain
+                                       # DESIGNREFS_API_URL env var overrides the upload endpoint (default: https://www.designrefs.com)
+designrefs designrefs.com --browser=firefox # Use Firefox instead of Chromium (better for Cloudflare bypass)
+designrefs designrefs.com --wcag          # WCAG 2.1 contrast analysis — real DOM pairs, AA/AAA grades
+designrefs designrefs.com --stealth       # Opt-in anti-detection: navigator spoofing + human mouse simulation (use only when authorized)
+designrefs designrefs.com --locale fi-FI --timezone Europe/Helsinki # Browser fingerprint: locale and timezone
+designrefs designrefs.com --user-agent "Mozilla/5.0 ..."           # Custom user agent string
+designrefs designrefs.com --accept-language "fi,en;q=0.9"          # Custom Accept-Language header
+designrefs designrefs.com --screen-size 2560x1440                  # Physical screen resolution to report
 ```
 
 Default: formatted terminal display only. Use `--save-output` to persist results as JSON files. Browser automatically retries in visible mode if headless extraction fails.
@@ -114,13 +114,13 @@ Analyze multiple pages to get a more complete picture of a site's design system.
 
 ```bash
 # Analyze homepage + 4 auto-discovered pages (default: 5 total)
-dembrandt dembrandt.com --crawl 5
+designrefs designrefs.com --crawl 5
 
 # Use sitemap.xml for page discovery instead of DOM link scraping
-dembrandt dembrandt.com --sitemap
+designrefs designrefs.com --sitemap
 
 # Combine both: up to 10 pages from sitemap
-dembrandt dembrandt.com --crawl 10 --sitemap
+designrefs designrefs.com --crawl 10 --sitemap
 ```
 
 **Page discovery** works two ways:
@@ -131,14 +131,14 @@ Pages are fetched sequentially with polite delays. Failed pages are skipped with
 
 ### Browser Selection
 
-By default, dembrandt uses Chromium. If you encounter bot detection or timeouts (especially on sites behind Cloudflare), try Firefox which is often more successful at bypassing these protections:
+By default, designrefs uses Chromium. If you encounter bot detection or timeouts (especially on sites behind Cloudflare), try Firefox which is often more successful at bypassing these protections:
 
 ```bash
 # Use Firefox instead of Chromium
-dembrandt dembrandt.com --browser=firefox
+designrefs designrefs.com --browser=firefox
 
 # Combine with other flags
-dembrandt dembrandt.com --browser=firefox --save-output --dtcg
+designrefs designrefs.com --browser=firefox --save-output --dtcg
 ```
 
 **When to use Firefox:**
@@ -147,7 +147,7 @@ dembrandt dembrandt.com --browser=firefox --save-output --dtcg
 - WSL environments where headless Chromium may struggle
 
 **Installation:**
-Browsers are installed on demand, not by `npm install` (dembrandt depends on the lean `playwright-core`, which carries no browser binaries). Fetch the engine you need, matched to the installed `playwright-core`:
+Browsers are installed on demand, not by `npm install` (designrefs depends on the lean `playwright-core`, which carries no browser binaries). Fetch the engine you need, matched to the installed `playwright-core`:
 
 ```bash
 npm run install-browser   # chromium (default)
@@ -155,20 +155,20 @@ npm run install-browser   # chromium (default)
 npx playwright@$(node -p "require('playwright-core/package.json').version") install firefox
 ```
 
-If you get `Executable doesn't exist` when using `--browser firefox`, the version resolved above may not match the `playwright-core` bundled inside the global dembrandt install (which can happen if you run the command from inside a project that pins a different version). Use `playwright-core` directly with the exact version dembrandt ships:
+If you get `Executable doesn't exist` when using `--browser firefox`, the version resolved above may not match the `playwright-core` bundled inside the global designrefs install (which can happen if you run the command from inside a project that pins a different version). Use `playwright-core` directly with the exact version designrefs ships:
 
 ```bash
 npx playwright-core@$(node -p "require('playwright-core/package.json').version") install firefox
 ```
 
-Run this from your home directory (outside any Node.js project) so `require` resolves against the global dembrandt install rather than a local `node_modules`.
+Run this from your home directory (outside any Node.js project) so `require` resolves against the global designrefs install rather than a local `node_modules`.
 
 ### Connect to an existing browser (CDP)
 
 Skip the bundled browser entirely and drive an already-running Chromium over the DevTools Protocol. Useful in CI or containers where a browser is already up, and it needs no local browser download at all:
 
 ```bash
-BROWSER_CDP_ENDPOINT=http://localhost:9222 dembrandt dembrandt.com --browser chromium
+BROWSER_CDP_ENDPOINT=http://localhost:9222 designrefs designrefs.com --browser chromium
 ```
 
 CDP is supported only with `--browser chromium`.
@@ -178,8 +178,8 @@ CDP is supported only with `--browser chromium`.
 Use `--dtcg` to export in the standardized [W3C Design Tokens Community Group](https://www.designtokens.org/) format:
 
 ```bash
-dembrandt dembrandt.com --dtcg
-# Saves to: output/dembrandt.com/TIMESTAMP.tokens.json
+designrefs designrefs.com --dtcg
+# Saves to: output/designrefs.com/TIMESTAMP.tokens.json
 ```
 
 The DTCG format is an industry-standard JSON schema that can be consumed by design tools and token transformation libraries like [Style Dictionary](https://styledictionary.com).
@@ -189,30 +189,30 @@ The DTCG format is an industry-standard JSON schema that can be consumed by desi
 Use `--design-md` to generate a [DESIGN.md](https://stitch.withgoogle.com/docs/design-md) file, a plain-text design system document readable by AI agents. The export follows Google's DESIGN.md draft format: YAML design tokens in front matter plus ordered Markdown guidance sections.
 
 ```bash
-dembrandt dembrandt.com --design-md
-# Saves to: output/dembrandt.com/DESIGN.md
+designrefs designrefs.com --design-md
+# Saves to: output/designrefs.com/DESIGN.md
 ```
 
-DESIGN.md reports only what Dembrandt observed on the source site. Exact values (colors, typography, spacing, radii, shadows) live in the YAML front matter when available, and the Markdown body adds human-readable context. Sections with no extracted evidence are omitted rather than filled with invented defaults. For example, the elevation section is dropped when the site uses no box-shadow tokens.
+DESIGN.md reports only what DesignRefs observed on the source site. Exact values (colors, typography, spacing, radii, shadows) live in the YAML front matter when available, and the Markdown body adds human-readable context. Sections with no extracted evidence are omitted rather than filled with invented defaults. For example, the elevation section is dropped when the site uses no box-shadow tokens.
 
 ### WCAG Contrast Analysis
 
-Use `--wcag` to check accessibility contrast ratios across the page. Unlike palette-based checkers, dembrandt walks the actual DOM and finds what color is rendered on top of what background — per element.
+Use `--wcag` to check accessibility contrast ratios across the page. Unlike palette-based checkers, designrefs walks the actual DOM and finds what color is rendered on top of what background — per element.
 
 ```bash
-dembrandt dembrandt.com --wcag
+designrefs designrefs.com --wcag
 ```
 
 Returns every text/background pair with contrast ratio and WCAG 2.1 grade (AA, AA-Large, AAA, or fail), sorted by how often each pair appears. Results are shown in terminal and included in JSON output as `wcag`.
 
-Also captures **interactive state contrast**: dembrandt simulates hover, focus, and disabled states on buttons, links, and inputs and checks contrast on each state. State pairs are tagged `[hover]`, `[focus]`, or `[disabled]` in output so you can catch contrast failures that only appear on interaction.
+Also captures **interactive state contrast**: designrefs simulates hover, focus, and disabled states on buttons, links, and inputs and checks contrast on each state. State pairs are tagged `[hover]`, `[focus]`, or `[disabled]` in output so you can catch contrast failures that only appear on interaction.
 
 ### Motion Tokens
 
-Motion tokens are extracted automatically on every run — no flag needed. Dembrandt analyzes CSS transitions and animations across the page and returns a structured motion profile.
+Motion tokens are extracted automatically on every run — no flag needed. DesignRefs analyzes CSS transitions and animations across the page and returns a structured motion profile.
 
 ```bash
-dembrandt dembrandt.com
+designrefs designrefs.com
 ```
 
 Returns:
@@ -226,7 +226,7 @@ Motion data is included in JSON output as `motion` and printed in terminal under
 ### ML-powered brand color detection (experimental)
 
 ```bash
-dembrandt dembrandt.com --ai
+designrefs designrefs.com --ai
 #   ⚡ ML primary → #533afd (score 0.93 · 68% acc)
 ```
 
@@ -237,18 +237,18 @@ Replaces the heuristic with a trained model — 2× more accurate (68% vs 32%). 
 Use `--brand-guide` to generate a printable PDF summarizing the extracted design system: colors, typography, components, and logo on a single document.
 
 ```bash
-dembrandt dembrandt.com --brand-guide
-# Saves to: output/dembrandt.com/TIMESTAMP.brand-guide.pdf
+designrefs designrefs.com --brand-guide
+# Saves to: output/designrefs.com/TIMESTAMP.brand-guide.pdf
 ```
 
 ## Continuous integration
 
-Dembrandt drives a real browser, so the browser revision must match `playwright-core`.
+DesignRefs drives a real browser, so the browser revision must match `playwright-core`.
 
 If you are not using the Playwright container image, install the browser revision that matches `playwright-core`:
 
 ```bash
-# in dembrandt's own repo
+# in designrefs's own repo
 npm run install-browser
 # elsewhere — derive the version so it always matches
 npx playwright@$(node -p "require('playwright-core/package.json').version") install --with-deps chromium
@@ -262,28 +262,28 @@ Compare an extraction against a committed baseline and fail the job on drift:
 
 ```bash
 # capture a baseline once (same environment you will check against)
-dembrandt https://app.example.com --json-only > baseline.json
+designrefs https://app.example.com --json-only > baseline.json
 
 # in CI — exits non-zero on drift; writes a report artifact
-dembrandt https://app.example.com --compare baseline.json --html report.html
+designrefs https://app.example.com --compare baseline.json --html report.html
 ```
 
 When the change is intended, accept it as the new baseline — `--approve` overwrites the local baseline file and passes instead of failing:
 
 ```bash
-dembrandt https://app.example.com --compare baseline.json --approve
+designrefs https://app.example.com --compare baseline.json --approve
 ```
 
 Add `--json-only` to a `--compare` run to get the drift report as machine-readable JSON under a `drift` key — `score`, `status`, `summary`, and per-token `changes[]` (each with `category`, `kind`, `before`, `after`, `delta`). A CI gate can render exactly which tokens moved (e.g. in a PR comment) from this instead of parsing the HTML report:
 
 ```bash
-dembrandt https://app.example.com --compare baseline.json --json-only
+designrefs https://app.example.com --compare baseline.json --json-only
 ```
 
 **Any CI.** The gate is platform-neutral — it is just the exit code plus the drift JSON, so it drops into any runner:
 
 ```bash
-dembrandt "$PREVIEW/checkout" --compare base.json --json-only > drift.json
+designrefs "$PREVIEW/checkout" --compare base.json --json-only > drift.json
 # exit 1 = drift. Read drift.json (.drift.changes) and surface it however your
 # platform does: a GitLab MR note, an Azure DevOps PR thread, a Jenkins status,
 # a Slack message, or an auto-filed Jira/Linear ticket.
@@ -308,58 +308,58 @@ With `--json-only`, a failure also prints a machine-readable `{ "error": { "code
 
 **Quick brand scan**
 ```bash
-dembrandt dembrandt.com
+designrefs designrefs.com
 ```
 
 **Compare two sites**
 ```bash
-dembrandt dembrandt.com --save-output
-dembrandt braintree.com --save-output
-# Compare output/dembrandt.com and output/braintree.com side by side
+designrefs designrefs.com --save-output
+designrefs braintree.com --save-output
+# Compare output/designrefs.com and output/braintree.com side by side
 ```
 
 **Multi-page audit** — get a fuller picture across the whole site
 ```bash
-dembrandt dembrandt.com --crawl 10 --sitemap --save-output
+designrefs designrefs.com --crawl 10 --sitemap --save-output
 ```
 
 **Spot-check a value** — verify a specific token fast
 ```bash
-dembrandt dembrandt.com --json-only | grep -i "border-radius"
+designrefs designrefs.com --json-only | grep -i "border-radius"
 ```
 
 **Export for Tailwind** — get spacing and color values into your config
 ```bash
-dembrandt dembrandt.com --dtcg --save-output
+designrefs designrefs.com --dtcg --save-output
 # Use the .tokens.json with Style Dictionary to generate tailwind.config.js
 ```
 
 **Export for Tokens Studio / Figma**
 ```bash
-dembrandt dembrandt.com --dtcg --save-output
+designrefs designrefs.com --dtcg --save-output
 # Import the .tokens.json directly into Tokens Studio
 ```
 
 **Generate DESIGN.md for your AI agent**
 ```bash
-dembrandt dembrandt.com --design-md
+designrefs designrefs.com --design-md
 # Point your agent at the output DESIGN.md
 ```
 
 **Accessibility audit** — check contrast on any live URL
 ```bash
-dembrandt dembrandt.com --wcag
+designrefs designrefs.com --wcag
 ```
 
 **Regression baseline** — snapshot now, catch drift later
 ```bash
-dembrandt myapp.com --save-output --dtcg
+designrefs myapp.com --save-output --dtcg
 # Store output as baseline, re-run after deploys and diff
 ```
 
 **CI / headless environments**
 ```bash
-dembrandt myapp.com --no-sandbox --save-output
+designrefs myapp.com --no-sandbox --save-output
 ```
 
 ## Use Cases
@@ -402,17 +402,17 @@ Uses Playwright to render the page, reads computed styles from the DOM, analyzes
 
 ## Intended Use
 
-Dembrandt reads publicly available CSS and computed styles from website DOMs for documentation, learning, and analysis of design systems you own or have permission to analyze.
+DesignRefs reads publicly available CSS and computed styles from website DOMs for documentation, learning, and analysis of design systems you own or have permission to analyze.
 
-Only run Dembrandt against sites whose Terms of Service permit automated access, or against your own properties. Do not use extracted material to reproduce third-party brand identities, logos, or trademarks. Respect robots.txt, rate limits, and copyright.
+Only run DesignRefs against sites whose Terms of Service permit automated access, or against your own properties. Do not use extracted material to reproduce third-party brand identities, logos, or trademarks. Respect robots.txt, rate limits, and copyright.
 
-Dembrandt does not host, redistribute, or claim rights to any third-party brand assets.
+DesignRefs does not host, redistribute, or claim rights to any third-party brand assets.
 
 ## Sponsors
 
 The CLI is MIT-licensed and free. Sponsorship funds the enforcement layer: a committed project-level token baseline, `--compare` and the ingest API for CI/CD drift gates, and the App platform (snapshot history, team drift dashboard, alerts to Slack, Linear, and GitHub).
 
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-me-pink?style=flat&logo=github-sponsors)](https://github.com/sponsors/dembrandt)
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-me-pink?style=flat&logo=github-sponsors)](https://github.com/sponsors/hudsonargollo)
 
 <!-- sponsors -->
 <!-- Backer ($25+) and Lead sponsor ($500+) logos appear here. -->
@@ -422,7 +422,7 @@ The CLI is MIT-licensed and free. Sponsorship funds the enforcement layer: a com
 
 Bugs, weird sites, pull requests. All welcome.
 
-Open an [Issue](https://github.com/dembrandt/dembrandt/issues) or PR.
+Open an [Issue](https://github.com/hudsonargollo/designrefs/issues) or PR.
 
 @thevangelist
 

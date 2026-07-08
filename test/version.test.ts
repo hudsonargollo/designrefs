@@ -1,12 +1,12 @@
 /**
  * Locks the output version contract: the three independent version axes and the
- * DTCG $extensions key shape that consumers (dembrandt-next, MCP, skills, drift)
+ * DTCG $extensions key shape that consumers (designrefs-next, MCP, skills, drift)
  * depend on.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  buildDembrandtProvenance,
+  buildDesignRefsProvenance,
   checkSchemaCompatibility,
   formatCompatibilityNotice,
   SCHEMA_VERSION,
@@ -14,27 +14,27 @@ import {
   DTCG_SPEC_VERSION,
 } from '../lib/version.js';
 
-test('buildDembrandtProvenance carries the three version axes', () => {
-  const ext = buildDembrandtProvenance({
+test('buildDesignRefsProvenance carries the three version axes', () => {
+  const ext = buildDesignRefsProvenance({
     url: 'https://www.acme.com/pricing',
     extractedAt: '2026-01-01T00:00:00.000Z',
-    meta: { dembrandtVersion: '9.9.9' },
+    meta: { designrefsVersion: '9.9.9' },
   });
   assert.strictEqual(ext.schemaVersion, SCHEMA_VERSION);
   assert.strictEqual(ext.toolVersion, '9.9.9');
   assert.strictEqual(ext.specVersion, DTCG_SPEC_VERSION);
-  assert.strictEqual(ext.generator, 'dembrandt');
+  assert.strictEqual(ext.generator, 'designrefs');
   assert.strictEqual(ext.source.domain, 'acme.com');
   assert.strictEqual(ext.source.url, 'https://www.acme.com/pricing');
 });
 
 test('EXTENSION_KEY is reverse-domain; SCHEMA_VERSION is semver', () => {
-  assert.strictEqual(EXTENSION_KEY, 'com.dembrandt');
+  assert.strictEqual(EXTENSION_KEY, 'com.designrefs');
   assert.match(SCHEMA_VERSION, /^\d+\.\d+\.\d+$/);
 });
 
 test('missing tool version degrades to null and domain to "unknown", never throws', () => {
-  const ext = buildDembrandtProvenance({});
+  const ext = buildDesignRefsProvenance({});
   assert.strictEqual(ext.toolVersion, null);
   assert.strictEqual(ext.source.domain, 'unknown');
   assert.strictEqual(ext.source.url, null);
@@ -44,7 +44,7 @@ test('compatibility compares the schema contract, not the churning tool version'
   // The exact bug behind "unknown vs v0.14.0": a refactor-only release bumps the
   // tool version but leaves the contract alone. Must read as fully compatible.
   const current = checkSchemaCompatibility({
-    meta: { schemaVersion: SCHEMA_VERSION, dembrandtVersion: '99.0.0' },
+    meta: { schemaVersion: SCHEMA_VERSION, designrefsVersion: '99.0.0' },
   });
   assert.strictEqual(current.status, 'current');
   assert.strictEqual(current.compatible, true);
@@ -66,13 +66,13 @@ test('compatibility flags breaking major drift in both directions', () => {
   const ahead = checkSchemaCompatibility({ meta: { schemaVersion: '2.0.0' } });
   assert.strictEqual(ahead.status, 'ahead');
   assert.strictEqual(ahead.compatible, false);
-  assert.match(formatCompatibilityNotice(ahead)!, /Upgrade dembrandt/);
+  assert.match(formatCompatibilityNotice(ahead)!, /Upgrade designrefs/);
 });
 
 test('compatibility degrades legacy and unknown extractions without throwing', () => {
   // Pre-1.0 tallenne: has a tool version, no schemaVersion. This is the case the
   // old viewer mislabelled "unknown vs v0.14.0".
-  const legacy = checkSchemaCompatibility({ meta: { dembrandtVersion: '0.14.0' } });
+  const legacy = checkSchemaCompatibility({ meta: { designrefsVersion: '0.14.0' } });
   assert.strictEqual(legacy.status, 'legacy');
   assert.strictEqual(legacy.compatible, false);
   assert.strictEqual(legacy.found, null);

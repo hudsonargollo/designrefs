@@ -273,7 +273,7 @@ export async function extractBranding(url: string, spinner: Spinner, browser: Br
   const degraded: string[] = []; // post-extraction stages that failed but did not abort the run
   const extractorErrors: ExtractorError[] = []; // scoped failures of the parallel extractors
 
-  // Progress lines print only in verbose mode (the main `dembrandt <url>`
+  // Progress lines print only in verbose mode (the main `designrefs <url>`
   // command). Report commands (drift/init/conformance) pass no verbose flag and
   // stay clean. Warnings are NOT routed through this — they always print.
   const log = (...args: unknown[]) => { if (options.verbose) console.log(...args); };
@@ -1232,7 +1232,7 @@ export async function extractBranding(url: string, spinner: Spinner, browser: Br
     // static scan. Click-toggle menus stay open without a pointer, so a single
     // re-scan captures the whole batch. Pure CSS :hover megamenus close when the
     // pointer leaves and are out of scope here. Set options.reveal=false (CLI:
-    // DEMBRANDT_DISABLE_REVEAL) to skip, e.g. for deterministic QA baselines.
+    // DESIGNREFS_DISABLE_REVEAL) to skip, e.g. for deterministic QA baselines.
     if (options.reveal !== false) {
       try {
       spinner.start("Revealing hidden content (menus, carousels)...");
@@ -1392,7 +1392,7 @@ export async function extractBranding(url: string, spinner: Spinner, browser: Br
       url: page.url(),
       extractedAt: new Date().toISOString(),
       meta: {
-        dembrandtVersion: options._version || null,
+        designrefsVersion: options._version || null,
         schemaVersion: SCHEMA_VERSION,
         flags: {
           ...(options.stealth && { stealth: true }),

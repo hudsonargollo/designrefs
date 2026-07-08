@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { EXIT, classifyError } from '../lib/exit-codes.js';
 
 /**
- * The CI exit-code contract. dembrandt-next's drift.yml branches on these exact
+ * The CI exit-code contract. designrefs-next's drift.yml branches on these exact
  * numbers (1 = drift, anything else nonzero = extraction failure) and the README
  * documents 67 as the retryable timeout. These tests pin the contract so a
  * refactor cannot silently renumber it.

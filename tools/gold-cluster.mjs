@@ -45,7 +45,7 @@ async function main() {
     process.exit(1);
   }
   const data = JSON.parse(await readFile(file, 'utf-8'));
-  console.log(`\nFailure patterns · dembrandt ${data.version} · ${data.results.length} sites\n`);
+  console.log(`\nFailure patterns · designrefs ${data.version} · ${data.results.length} sites\n`);
 
   const patterns = {
     primaryFail: [],         // primary dim scored < threshold

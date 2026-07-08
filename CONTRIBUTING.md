@@ -1,8 +1,8 @@
-# Contributing to Dembrandt
+# Contributing to DesignRefs
 
-Dembrandt extracts publicly visible design information from websites: colors, typography, spacing, and component styles in seconds.
+DesignRefs extracts publicly visible design information from websites: colors, typography, spacing, and component styles in seconds.
 
-Dembrandt analyzes CSS and DOM structure to help document design systems and design tokens. Useful for various use cases.
+DesignRefs analyzes CSS and DOM structure to help document design systems and design tokens. Useful for various use cases.
 
 I’m @thevangelist, and I welcome you to develop this creative tool with me. Be it stargazers, dreamers, bug hunters, or just local hobos.
 

@@ -44,14 +44,14 @@ test('baseline id path: POSTs candidate to the App and returns its report', asyn
     return { ok: true, json: async () => ({ drift: fakeReport }) };
   }) as any;
 
-  const r = await resolveCompare('dembrandt.com', candidate, {
+  const r = await resolveCompare('designrefs.com', candidate, {
     isFile: () => false,
     fetchFn,
     api: 'https://app.example.com/',
   });
 
   assert.equal(captured.url, 'https://app.example.com/api/app/drift');
-  assert.equal(captured.body.baselineId, 'dembrandt.com');
+  assert.equal(captured.body.baselineId, 'designrefs.com');
   assert.ok(captured.body.candidate.colors, 'sends the candidate extraction');
   assert.equal(r.mode, 'platform');
   assert.equal(r.report.score, 7);
@@ -63,7 +63,7 @@ test('local file path: unparseable baseline rejects with a clear error, not a ba
       isFile: () => true,
       readFile: () => '---\nname: not json\n---',
     }),
-    /baseline DESIGN\.md is not a dembrandt JSON extraction .*--save-output/,
+    /baseline DESIGN\.md is not a designrefs JSON extraction .*--save-output/,
   );
 });
 

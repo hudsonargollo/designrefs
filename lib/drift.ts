@@ -1,7 +1,7 @@
 /**
  * Drift engine — the product core.
  *
- * Compares two Dembrandt native extracts (a baseline and a candidate) and
+ * Compares two DesignRefs native extracts (a baseline and a candidate) and
  * returns a drift report: a 0-100 score (0 = identical), a pass/fail verdict,
  * and a list of what changed. Pure functions, no dependencies, no infra.
  *

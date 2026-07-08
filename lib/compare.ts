@@ -1,11 +1,11 @@
 /**
  * --compare dispatch. The argument is either:
  *   - a local file  → diff against it here (free, offline, deterministic)
- *   - a baseline id → POST the candidate to the Dembrandt App, which stores
+ *   - a baseline id → POST the candidate to the DesignRefs App, which stores
  *                     baselines and runs the same engine server-side
  *
  * Same flag, two backends — the local path is the free wedge; the id path is the
- * App platform (dembrandt-next/app). Both call the one canonical drift engine.
+ * App platform (designrefs-next/app). Both call the one canonical drift engine.
  *
  * Dependencies are injectable so the dispatch is unit-testable without a real
  * filesystem or network.
@@ -28,8 +28,8 @@ export interface CompareDeps {
   isFile?: (p: string) => boolean;
   readFile?: (p: string, enc: "utf-8") => string;
   fetchFn?: typeof fetch;
-  /** App base URL. Caller passes the `.dembrandtrc` `endpoint`; default is the
-   *  production App at https://dembrandt.com. */
+  /** App base URL. Caller passes the `.designrefsrc` `endpoint`; default is the
+   *  production App at https://designrefs.com. */
   api?: string;
 }
 
@@ -48,7 +48,7 @@ export async function resolveCompare(
       baseline = JSON.parse(readFile(arg, "utf-8")) as BrandingResult;
     } catch (err) {
       throw new Error(
-        `baseline ${arg} is not a dembrandt JSON extraction ` +
+        `baseline ${arg} is not a designrefs JSON extraction ` +
         `(${(err as Error).message}) — create one with --save-output or --json-only`,
         { cause: err }
       );
@@ -64,7 +64,7 @@ export async function resolveCompare(
 
   // Not a local file → treat as a platform baseline id.
   const fetchFn = deps.fetchFn ?? fetch;
-  const api = (deps.api ?? "https://dembrandt.com").replace(/\/$/, "");
+  const api = (deps.api ?? "https://designrefs.com").replace(/\/$/, "");
   const res = await fetchFn(`${api}/api/app/drift`, {
     method: "POST",
     headers: { "content-type": "application/json" },

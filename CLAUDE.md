@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-> Ecosystem docs, release process, flag checklists, infrastructure: clone `github.com/dembrandt/dembrandt-internal` (private) and open its README.
+> Ecosystem docs, release process, flag checklists, infrastructure: clone `github.com/hudsonargollo/designrefs-internal` (private) and open its README.
 
 ## System Instruction
 
@@ -12,11 +12,11 @@ Absolute Mode. Eliminate emojis, filler, hype, soft asks, conversational transit
 
 ```bash
 node index.js <url>
-node index.js dembrandt.com --json-only
-node index.js dembrandt.com --dark-mode
-node index.js dembrandt.com --mobile
-node index.js dembrandt.com --slow
-node index.js dembrandt.com --stealth
+node index.js designrefs.com --json-only
+node index.js designrefs.com --dark-mode
+node index.js designrefs.com --mobile
+node index.js designrefs.com --slow
+node index.js designrefs.com --stealth
 npm run install-browser
 ```
 
@@ -101,7 +101,7 @@ All extraction functions use `page.evaluate()` to run analysis in browser contex
 ```javascript
 {
   url, extractedAt,
-  meta: { dembrandtVersion, stealth, locale, timezoneId, ... },
+  meta: { designrefsVersion, stealth, locale, timezoneId, ... },
   logo, favicons,
   colors: { semantic, palette, cssVariables },
   typography: { styles, sources },

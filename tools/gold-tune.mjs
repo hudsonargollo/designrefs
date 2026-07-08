@@ -98,7 +98,7 @@ async function gridSketch() {
   console.log(`  - structural color filter cutoff           (currently 40% of elements)`);
   console.log(`  - confidence high/medium/low boundaries    (currently 20 / 5)`);
   console.log(`  - context score weights                    (logo=5, brand=5, primary=4, ...)\n`);
-  console.log(`Wire each as DEMBRANDT_<NAME> with sensible defaults. Once wired,`);
+  console.log(`Wire each as DESIGNREFS_<NAME> with sensible defaults. Once wired,`);
   console.log(`this script will grid-search ±50% around each value and report the`);
   console.log(`combination that maximizes aggregate gold score.\n`);
   console.log(`Until then, use 'gold-tune compare' to compare scores across`);

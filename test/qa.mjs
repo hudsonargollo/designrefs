@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * QA Toolchain for Dembrandt
+ * QA Toolchain for DesignRefs
  *
  * Three-layer visual comparison: website screenshot, raw identified colors, extracted palette.
  *
@@ -60,7 +60,7 @@ function extractSite(domain) {
         stdio: ["pipe", "pipe", "pipe"],
         // Disable the reveal pass so baselines stay deterministic: clicking menus
         // / advancing carousels mutates the page and varies run-to-run.
-        env: { ...process.env, DEMBRANDT_DISABLE_REVEAL: "1" },
+        env: { ...process.env, DESIGNREFS_DISABLE_REVEAL: "1" },
       }
     );
 
@@ -107,7 +107,7 @@ function extractToTemp(domain) {
         stdio: ["pipe", "pipe", "pipe"],
         // Disable the reveal pass so baselines stay deterministic: clicking menus
         // / advancing carousels mutates the page and varies run-to-run.
-        env: { ...process.env, DEMBRANDT_DISABLE_REVEAL: "1" },
+        env: { ...process.env, DESIGNREFS_DISABLE_REVEAL: "1" },
       }
     );
 
@@ -362,7 +362,7 @@ tr.fail td.domain{color:#f85149}
 </style>
 </head>
 <body>
-<h1>Dembrandt QA</h1>
+<h1>DesignRefs QA</h1>
 <div class="meta">${new Date().toISOString().slice(0,10)} &middot; ${results.length} sites</div>
 <div class="verdict ${ok ? 'ok' : 'bad'}">${ok ? 'OK to ship' : regressions + ' site(s) regressed'}</div>
 <table>
@@ -378,7 +378,7 @@ function generateMarkdownReport(results) {
     hasSiteRegression(r.golden?.data, r.current?.data)
   ).length;
 
-  let md = `## Dembrandt QA Report\n\n`;
+  let md = `## DesignRefs QA Report\n\n`;
   md += `${new Date().toISOString().slice(0,10)} | ${results.length} sites | ${regressions === 0 ? "OK" : regressions + " regression(s)"}\n\n`;
   md += `| Site | Colors | Typography | Spacing | Radius | Shadows |\n`;
   md += `|------|--------|------------|---------|--------|---------|\n`;
@@ -412,7 +412,7 @@ async function main() {
   }
 
   console.log(
-    `\nDembrandt QA — ${isBaseline ? "BASELINE" : "DIFF"} mode — ${targetSites.length} site(s)\n`
+    `\nDesignRefs QA — ${isBaseline ? "BASELINE" : "DIFF"} mode — ${targetSites.length} site(s)\n`
   );
 
   if (isBaseline) {

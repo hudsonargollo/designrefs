@@ -1,7 +1,7 @@
 /**
  * GitHub Actions workflow-command annotations for the drift gate (DEM-83).
  *
- * When `dembrandt --compare` runs inside GitHub Actions and detects drift, emit
+ * When `designrefs --compare` runs inside GitHub Actions and detects drift, emit
  * `::error::`/`::warning::` workflow commands so the failure renders inline on
  * the PR's Checks tab instead of being buried in log text. The status check
  * (pass/fail) is already carried by the process exit code (EXIT.DRIFT), so this

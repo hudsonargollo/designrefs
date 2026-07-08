@@ -1,6 +1,6 @@
-# Dembrandt Examples
+# DesignRefs Examples
 
-This folder contains sample extractions against public open-source design system documentation sites. Each JSON file demonstrates Dembrandt's ability to extract colors, typography, spacing, shadows, and component styles.
+This folder contains sample extractions against public open-source design system documentation sites. Each JSON file demonstrates DesignRefs's ability to extract colors, typography, spacing, shadows, and component styles.
 
 The two included samples target publicly documented, open-source design systems whose authors publish their design guidance for others to read and learn from.
 
@@ -37,7 +37,7 @@ Sample extraction against the public Carbon Design System documentation site.
 Each example was generated with a single command:
 
 ```bash
-npx dembrandt <url> --json-only > examples/<name>.json
+npx designrefs <url> --json-only > examples/<name>.json
 ```
 
 **Key capabilities demonstrated:**
@@ -73,12 +73,12 @@ npx dembrandt <url> --json-only > examples/<name>.json
 
 ```bash
 # Extract any site you own or have permission to analyze
-npx dembrandt example.com
+npx designrefs example.com
 
 # Export as JSON
-npx dembrandt example.com --json-only > tokens.json
+npx designrefs example.com --json-only > tokens.json
 ```
 
 ---
 
-These examples showcase how Dembrandt reads publicly published CSS from design system documentation sites and turns it into structured tokens.
+These examples showcase how DesignRefs reads publicly published CSS from design system documentation sites and turns it into structured tokens.

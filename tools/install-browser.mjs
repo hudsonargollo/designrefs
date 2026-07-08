@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Install the Playwright browser revision that matches the resolved
- * playwright-core version. dembrandt drives browsers with playwright-core, which
+ * playwright-core version. designrefs drives browsers with playwright-core, which
  * does NOT download them — and a browser installed for a different Playwright
  * version won't be found ("Executable doesn't exist"). Deriving the version from
  * the resolved playwright-core keeps the two in lockstep on every platform.

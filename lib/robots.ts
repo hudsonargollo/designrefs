@@ -1,4 +1,4 @@
-const UA = "Dembrandt";
+const UA = "DesignRefs";
 
 interface RobotsRule {
   type: "allow" | "disallow";

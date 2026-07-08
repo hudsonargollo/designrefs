@@ -1,10 +1,10 @@
 /**
  * DTCG (W3C Design Tokens CG) format exporter
- * Converts dembrandt extraction output to W3C DTCG format
+ * Converts designrefs extraction output to W3C DTCG format
  * Spec: https://www.designtokens.org/TR/2025.10/format/
  */
 
-import { buildDembrandtProvenance, EXTENSION_KEY } from '../version.js';
+import { buildDesignRefsProvenance, EXTENSION_KEY } from '../version.js';
 import type { BrandingResult } from '../types.js';
 
 interface DtcgColorValue {
@@ -429,7 +429,7 @@ function exportShadows(shadows) {
 }
 
 /**
- * Main export function - converts dembrandt output to W3C Design Tokens format
+ * Main export function - converts designrefs output to W3C Design Tokens format
  */
 export function toDtcgTokens(extractionResult: BrandingResult): Record<string, any> {
   const w3cTokens: Record<string, any> = {};
@@ -438,7 +438,7 @@ export function toDtcgTokens(extractionResult: BrandingResult): Record<string, a
   // is the only sanctioned channel for vendor data, and the spec requires other
   // tools to preserve it across a round-trip. Single source of truth: version.js.
   w3cTokens.$extensions = {
-    [EXTENSION_KEY]: buildDembrandtProvenance(extractionResult),
+    [EXTENSION_KEY]: buildDesignRefsProvenance(extractionResult),
   };
 
   // Export colors

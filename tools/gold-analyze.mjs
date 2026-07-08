@@ -116,7 +116,7 @@ function buildPrompt(cluster, source) {
     return `  - site=${i.site}, score=${i.score}, expected=${JSON.stringify(i.expected)}, actual=${JSON.stringify(i.actual)}${i.deltaE != null ? `, ΔE=${i.deltaE}` : ''}${i.verdict ? `, verdict=${i.verdict}` : ''}${i.comment ? `, human note: "${i.comment}"` : ''}`;
   }).join('\n');
 
-  return `You are reviewing automated brand-extraction quality for a tool called dembrandt. It runs in a headless Chromium against websites and identifies design tokens (colors, fonts, logos).
+  return `You are reviewing automated brand-extraction quality for a tool called designrefs. It runs in a headless Chromium against websites and identifies design tokens (colors, fonts, logos).
 
 A benchmark labeled by a human flagged a failure pattern:
 
@@ -140,7 +140,7 @@ For each hypothesis include:
 
 Format as markdown. Start each hypothesis with ### Hypothesis N. Be concrete, name actual functions and variables from the source. Avoid platitudes ("improve robustness").
 
-If the pattern looks like a data quality issue (e.g. user mislabeled, dembrandt was actually right), say so plainly.
+If the pattern looks like a data quality issue (e.g. user mislabeled, designrefs was actually right), say so plainly.
 
 Respond with markdown only. No preamble.`;
 }
@@ -202,7 +202,7 @@ async function main() {
   const outFile = resolve(ANALYSIS_DIR, `${scoreData.version}_${ts}.md`);
 
   const sections = [];
-  sections.push(`# dembrandt failure analysis · ${scoreData.version}`);
+  sections.push(`# designrefs failure analysis · ${scoreData.version}`);
   sections.push(`Generated ${new Date().toISOString()} · provider: ${provider} · score file: ${scoreFile.split('/').slice(-2).join('/')}`);
   sections.push(`Aggregate gold score: **${scoreData.aggregate}/100** across ${scoreData.results.length} sites.\n`);
 

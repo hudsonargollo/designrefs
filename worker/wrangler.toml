@@ -1,0 +1,7 @@
+name = "designrefs"
+main = "src/index.js"
+compatibility_date = "2026-07-08"
+account_id = "193882a3226d5fb9c3611ea50c95992e"
+
+[observability]
+enabled = true

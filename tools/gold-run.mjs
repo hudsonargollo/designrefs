@@ -39,8 +39,8 @@ async function listGoldSites() {
   return out;
 }
 
-async function runDembrandt(url) {
-  const screenshotPath = resolve(tmpdir(), `dembrandt-score-${Date.now()}.png`);
+async function runDesignRefs(url) {
+  const screenshotPath = resolve(tmpdir(), `designrefs-score-${Date.now()}.png`);
   return await new Promise((res, rej) => {
     const proc = spawn(process.execPath, [
       resolve(ROOT, 'dist', 'index.js'),
@@ -108,14 +108,14 @@ async function main() {
     process.exit(1);
   }
   const version = await pkgVersion();
-  console.log(`\nGold benchmark · dembrandt ${version} · ${filtered.length} site(s)\n`);
+  console.log(`\nGold benchmark · designrefs ${version} · ${filtered.length} site(s)\n`);
 
   const results = [];
   for (const { domain, expected } of filtered) {
     process.stdout.write(`▸ ${domain.padEnd(20)} extracting...`);
     let actual = null, error = null, score = null;
     try {
-      actual = await runDembrandt(expected.url);
+      actual = await runDesignRefs(expected.url);
       score = scoreSite(expected, actual);
     } catch (e) {
       error = e.message;

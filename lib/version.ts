@@ -1,24 +1,24 @@
 /**
- * Single source of truth for dembrandt output versioning.
+ * Single source of truth for designrefs output versioning.
  *
  * Three independent version axes travel with every extraction. Keeping them
- * separate is the whole point: a consumer (dembrandt-next, the MCP client, a
+ * separate is the whole point: a consumer (designrefs-next, the MCP client, a
  * skill, the drift engine) must be able to reason about the *output format*
  * without coupling to which CLI release produced it.
  *
- *  - toolVersion   — the dembrandt CLI release (package.json version, e.g.
- *                    "0.16.0"). Surfaced as meta.dembrandtVersion. Changes on
+ *  - toolVersion   — the designrefs CLI release (package.json version, e.g.
+ *                    "0.16.0"). Surfaced as meta.designrefsVersion. Changes on
  *                    every npm publish, including pure refactors.
- *  - schemaVersion — the dembrandt OUTPUT CONTRACT. Bumps only when the JSON
+ *  - schemaVersion — the designrefs OUTPUT CONTRACT. Bumps only when the JSON
  *                    shape changes in a way a consumer must adapt to. A tool
  *                    release that does not change the shape leaves this alone.
  *  - specVersion   — the W3C DTCG spec revision the `--dtcg` export targets.
  *
  * Version info is surfaced through the two extraction chokepoints, so every
  * consumer inherits it without special-casing:
- *  - native JSON  : meta.schemaVersion (alongside meta.dembrandtVersion),
+ *  - native JSON  : meta.schemaVersion (alongside meta.designrefsVersion),
  *                   produced by extractBranding().
- *  - DTCG export  : $extensions["com.dembrandt"], produced by toDtcgTokens().
+ *  - DTCG export  : $extensions["com.designrefs"], produced by toDtcgTokens().
  *                   The DTCG spec mandates that tools preserve vendor extension
  *                   data they do not understand, so this block survives a
  *                   round-trip through any compliant tool.
@@ -34,7 +34,7 @@
 // URL is a global in both the Node and DOM libs; no import needed.
 
 /**
- * dembrandt output contract version. Bump per the policy documented above.
+ * designrefs output contract version. Bump per the policy documented above.
  *
  *  1.2.0 — added colors.semantic.background, colors.semantic.text and
  *          colors.semantic.accent (canonical page surface, body text, and a
@@ -54,24 +54,24 @@ export const SCHEMA_VERSION = '1.2.0';
 export const DTCG_SPEC_VERSION = '2025.10';
 
 /**
- * Reverse-domain key under which all dembrandt-specific data lives in DTCG
+ * Reverse-domain key under which all designrefs-specific data lives in DTCG
  * output. The DTCG spec recommends reverse-domain notation for $extensions keys
  * to avoid vendor clashes, and requires other tools to preserve unknown
  * extension data. This is the only sanctioned channel for proprietary data;
  * never invent custom `$`-prefixed keys or custom `$type` values.
  */
-export const EXTENSION_KEY = 'com.dembrandt';
+export const EXTENSION_KEY = 'com.designrefs';
 
 /** Document-level provenance block embedded in DTCG `$extensions`. */
-export interface DembrandtProvenance {
+export interface DesignRefsProvenance {
   /** Output contract version (SCHEMA_VERSION). */
   schemaVersion: string;
-  /** dembrandt CLI release that produced this, or null if unknown. */
+  /** designrefs CLI release that produced this, or null if unknown. */
   toolVersion: string | null;
   /** DTCG spec revision the export targets. */
   specVersion: string;
   /** Constant tool identifier. */
-  generator: 'dembrandt';
+  generator: 'designrefs';
   /** Extraction source. */
   source: { url: string | null; domain: string };
   /** ISO timestamp of the extraction, or null. */
@@ -82,7 +82,7 @@ export interface DembrandtProvenance {
 export interface ExtractionLike {
   url?: string;
   extractedAt?: string;
-  meta?: { dembrandtVersion?: string | null; schemaVersion?: string | null };
+  meta?: { designrefsVersion?: string | null; schemaVersion?: string | null };
 }
 
 /**
@@ -99,16 +99,16 @@ function domainOf(url: string | undefined | null): string {
 }
 
 /**
- * Build the canonical `com.dembrandt` provenance block for DTCG `$extensions`.
+ * Build the canonical `com.designrefs` provenance block for DTCG `$extensions`.
  * Reads the tool version off the already-assembled native result so there is one
  * place (extractBranding's meta) that owns toolVersion.
  */
-export function buildDembrandtProvenance(result: ExtractionLike = {}): DembrandtProvenance {
+export function buildDesignRefsProvenance(result: ExtractionLike = {}): DesignRefsProvenance {
   return {
     schemaVersion: SCHEMA_VERSION,
-    toolVersion: result?.meta?.dembrandtVersion ?? null,
+    toolVersion: result?.meta?.designrefsVersion ?? null,
     specVersion: DTCG_SPEC_VERSION,
-    generator: 'dembrandt',
+    generator: 'designrefs',
     source: {
       url: result?.url ?? null,
       domain: domainOf(result?.url),
@@ -136,7 +136,7 @@ export function buildDembrandtProvenance(result: ExtractionLike = {}): Dembrandt
  *
  * `compatible` is true only for 'current' and 'compatible'; every other status
  * carries a non-null `message`. This is the single sanctioned compatibility
- * check: consumers (the viewer, dembrandt-next, the drift engine) must compare
+ * check: consumers (the viewer, designrefs-next, the drift engine) must compare
  * the OUTPUT CONTRACT here, never the CLI release (`toolVersion`), which churns
  * on every publish and produces false "version mismatch" warnings.
  */
@@ -177,7 +177,7 @@ function parseSemver(v: string | null | undefined): { major: number; minor: numb
  */
 export function checkSchemaCompatibility(result: ExtractionLike = {}): SchemaCompatibility {
   const found = result?.meta?.schemaVersion ?? null;
-  const toolVersion = result?.meta?.dembrandtVersion ?? null;
+  const toolVersion = result?.meta?.designrefsVersion ?? null;
   const base = { found, expected: SCHEMA_VERSION, toolVersion };
 
   const foundParts = parseSemver(found);
@@ -188,7 +188,7 @@ export function checkSchemaCompatibility(result: ExtractionLike = {}): SchemaCom
         status: 'legacy',
         compatible: false,
         message:
-          `Extraction predates the schema contract (produced by dembrandt v${toolVersion}, ` +
+          `Extraction predates the schema contract (produced by designrefs v${toolVersion}, ` +
           `no schemaVersion). Re-extract with the current release to validate against ` +
           `schema ${SCHEMA_VERSION}. Reading best-effort.`,
       };
@@ -227,7 +227,7 @@ export function checkSchemaCompatibility(result: ExtractionLike = {}): SchemaCom
     compatible: false,
     message:
       `Extraction uses schema ${found}, newer than this build's ${SCHEMA_VERSION} ` +
-      `(breaking change between majors). Upgrade dembrandt to read it reliably.`,
+      `(breaking change between majors). Upgrade designrefs to read it reliably.`,
   };
 }
 

@@ -14,12 +14,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout dembrandt-skills
+      - name: Checkout designrefs-skills
         uses: actions/checkout@v4
         with:
-          repository: dembrandt/dembrandt-skills
+          repository: hudsonargollo/designrefs-skills
           token: ${{ secrets.SKILLS_REPO_PAT }}
-          path: dembrandt-skills
+          path: designrefs-skills
 
       - uses: actions/setup-node@v4
         with:
@@ -27,26 +27,26 @@ jobs:
 
       - name: Bump skills version and update SKILL.md
         env:
-          DEMBRANDT_VERSION: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          DESIGNREFS_VERSION: ${{ github.event.release.tag_name || github.event.inputs.tag }}
         run: |
-          cd dembrandt-skills
-          VERSION="${DEMBRANDT_VERSION#v}"
+          cd designrefs-skills
+          VERSION="${DESIGNREFS_VERSION#v}"
           npm version patch --no-git-tag-version
           find skills -name "SKILL.md" -exec \
-            sed -i "s/dembrandt@[0-9][0-9.]*/dembrandt@${VERSION}/g" {} \;
+            sed -i "s/designrefs@[0-9][0-9.]*/designrefs@${VERSION}/g" {} \;
 
-      - name: Create PR in dembrandt-skills
+      - name: Create PR in designrefs-skills
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.SKILLS_REPO_PAT }}
-          path: dembrandt-skills
-          commit-message: "chore: sync with dembrandt ${{ github.event.release.tag_name || github.event.inputs.tag }}"
-          branch: "sync/dembrandt-${{ github.event.release.tag_name || github.event.inputs.tag }}"
-          title: "chore: sync with dembrandt ${{ github.event.release.tag_name || github.event.inputs.tag }}"
+          path: designrefs-skills
+          commit-message: "chore: sync with designrefs ${{ github.event.release.tag_name || github.event.inputs.tag }}"
+          branch: "sync/designrefs-${{ github.event.release.tag_name || github.event.inputs.tag }}"
+          title: "chore: sync with designrefs ${{ github.event.release.tag_name || github.event.inputs.tag }}"
           body: |
-            Automated sync triggered by [dembrandt ${{ github.event.release.tag_name || github.event.inputs.tag }}](${{ github.event.release.html_url || 'manual trigger' }}).
+            Automated sync triggered by [designrefs ${{ github.event.release.tag_name || github.event.inputs.tag }}](${{ github.event.release.html_url || 'manual trigger' }}).
 
-            - Bumped `dembrandt-skills` patch version
+            - Bumped `designrefs-skills` patch version
             - Updated CLI version references in skill files
 
             **⚠ Manual check required before merging**
@@ -54,31 +54,31 @@ jobs:
             - Flags reference table
             - Anti-Bot section if behavior changed
 
-            See full checklist: [dembrandt/CLAUDE.md](https://github.com/dembrandt/dembrandt/blob/main/CLAUDE.md)
+            See full checklist: [designrefs/CLAUDE.md](https://github.com/hudsonargollo/designrefs/blob/main/CLAUDE.md)
           labels: automated
 
   sync-next:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout dembrandt-next
+      - name: Checkout designrefs-next
         uses: actions/checkout@v4
         with:
-          repository: dembrandt/dembrandt-next
+          repository: hudsonargollo/designrefs-next
           token: ${{ secrets.NEXT_REPO_PAT }}
-          path: dembrandt-next
+          path: designrefs-next
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24
 
-      - name: Update dembrandt version references
+      - name: Update designrefs version references
         env:
-          DEMBRANDT_VERSION: ${{ github.event.release.tag_name || github.event.inputs.tag }}
+          DESIGNREFS_VERSION: ${{ github.event.release.tag_name || github.event.inputs.tag }}
         run: |
-          cd dembrandt-next
-          VERSION="${DEMBRANDT_VERSION#v}"
-          npm pkg set dependencies.dembrandt="${VERSION}"
+          cd designrefs-next
+          VERSION="${DESIGNREFS_VERSION#v}"
+          npm pkg set dependencies.designrefs="${VERSION}"
           # Keep package-lock.json in sync with package.json. Without this the
           # lock still pins the old version and `npm ci` (CI, the drift gate)
           # fails before anyone can run `npm install`.
@@ -86,18 +86,18 @@ jobs:
           # schema.org softwareVersion always tracks the CLI version (deterministic)
           sed -i "s/\"softwareVersion\": \"[0-9][0-9.]*\"/\"softwareVersion\": \"${VERSION}\"/" app/layout.tsx
 
-      - name: Create PR in dembrandt-next
+      - name: Create PR in designrefs-next
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.NEXT_REPO_PAT }}
-          path: dembrandt-next
-          commit-message: "chore: bump dembrandt to ${{ github.event.release.tag_name || github.event.inputs.tag }}"
-          branch: "sync/dembrandt-${{ github.event.release.tag_name || github.event.inputs.tag }}"
-          title: "chore: bump dembrandt to ${{ github.event.release.tag_name || github.event.inputs.tag }}"
+          path: designrefs-next
+          commit-message: "chore: bump designrefs to ${{ github.event.release.tag_name || github.event.inputs.tag }}"
+          branch: "sync/designrefs-${{ github.event.release.tag_name || github.event.inputs.tag }}"
+          title: "chore: bump designrefs to ${{ github.event.release.tag_name || github.event.inputs.tag }}"
           body: |
-            Automated bump triggered by [dembrandt ${{ github.event.release.tag_name || github.event.inputs.tag }}](${{ github.event.release.html_url || 'manual trigger' }}).
+            Automated bump triggered by [designrefs ${{ github.event.release.tag_name || github.event.inputs.tag }}](${{ github.event.release.html_url || 'manual trigger' }}).
 
-            Updates `dembrandt` npm dependency to latest release (package.json + package-lock.json) and bumps `app/layout.tsx` schema.org `softwareVersion`.
+            Updates `designrefs` npm dependency to latest release (package.json + package-lock.json) and bumps `app/layout.tsx` schema.org `softwareVersion`.
 
             **⚠ Manual check required before merging**
             This automation bumps the npm version in `package.json` and the schema.org `softwareVersion`. If this release added or changed CLI flags, update these manually before merging:
@@ -107,5 +107,5 @@ jobs:
             - `lib/app/extract-types.ts` — `ExtractionMeta` if JSON output shape changed
             - `app/api/extractions/route.ts` — if field access needs updating
 
-            See full checklist: [dembrandt/CLAUDE.md](https://github.com/dembrandt/dembrandt/blob/main/CLAUDE.md)
+            See full checklist: [designrefs/CLAUDE.md](https://github.com/hudsonargollo/designrefs/blob/main/CLAUDE.md)
           labels: automated

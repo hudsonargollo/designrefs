@@ -6,7 +6,7 @@
  *
  * Kept in its own module (not index.ts, which runs the CLI on import) so the
  * classifier is importable and unit-testable without spawning a subprocess.
- * Consumers (dembrandt-next/.github/workflows/drift.yml) depend on these values;
+ * Consumers (designrefs-next/.github/workflows/drift.yml) depend on these values;
  * changing one is a breaking change to the gate.
  */
 

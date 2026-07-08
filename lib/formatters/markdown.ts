@@ -1,13 +1,13 @@
 /**
  * DESIGN.md generator
  *
- * Converts dembrandt extraction results into Google's DESIGN.md draft format:
+ * Converts designrefs extraction results into Google's DESIGN.md draft format:
  * YAML design tokens in front matter plus ordered markdown rationale sections.
  */
 import { convertColor, deltaE } from '../colors.js';
 
 /**
- * @param {object} result - dembrandt extraction result
+ * @param {object} result - designrefs extraction result
  * @returns {string} DESIGN.md content
  */
 export function generateDesignMd(result: any) {
@@ -56,7 +56,7 @@ function getName(result, domain) {
 }
 
 function buildOverviewSection(domain) {
-  return `## Overview\nDesign tokens extracted from ${domain}. The YAML front matter contains machine-readable values observed by Dembrandt when available; the sections below summarize the extracted evidence without redesigning or correcting the source site.`;
+  return `## Overview\nDesign tokens extracted from ${domain}. The YAML front matter contains machine-readable values observed by DesignRefs when available; the sections below summarize the extracted evidence without redesigning or correcting the source site.`;
 }
 
 function buildColorRoles(result) {

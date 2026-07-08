@@ -1,6 +1,6 @@
 /**
  * Ingest helpers for consumers that STORE or DIFF extractions (drift engine,
- * dembrandt-next). The CLI output type is deliberately loose where it has to be
+ * designrefs-next). The CLI output type is deliberately loose where it has to be
  * (a flag-driven producer), but that looseness is toxic downstream: a weight
  * that is sometimes a string and sometimes a number breaks diff math.
  *

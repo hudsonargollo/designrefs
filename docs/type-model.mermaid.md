@@ -1,8 +1,8 @@
-# dembrandt type model
+# designrefs type model
 
 Visual map of the extraction output contract, generated from `lib/types.ts` and
 `lib/version.ts`. `BrandingResult` is the root every consumer (CLI, MCP,
-dembrandt-next, drift) reads. Renders in VS Code (Mermaid preview) and GitHub.
+designrefs-next, drift) reads. Renders in VS Code (Mermaid preview) and GitHub.
 
 ```mermaid
 classDiagram
@@ -28,7 +28,7 @@ classDiagram
   }
 
   class ExtractionMeta {
-    +string dembrandtVersion
+    +string designrefsVersion
     +string schemaVersion
     +Record flags
     +string[] degraded
@@ -129,11 +129,11 @@ Separate from the data shape: three independent version axes plus the DTCG
 
 ```mermaid
 classDiagram
-  class DembrandtProvenance {
+  class DesignRefsProvenance {
     +string schemaVersion
     +string toolVersion
     +string specVersion
-    +generator dembrandt
+    +generator designrefs
     +source urlAndDomain
     +string extractedAt
   }
@@ -143,5 +143,5 @@ classDiagram
     +string locale timezoneId userAgent
     +string _version
   }
-  note for DembrandtProvenance "Emitted under the com.dembrandt extensions key in --dtcg output, via buildDembrandtProvenance"
+  note for DesignRefsProvenance "Emitted under the com.designrefs extensions key in --dtcg output, via buildDesignRefsProvenance"
 ```
