@@ -1,0 +1,15 @@
+name = "designrefs"
+main = "src/index.js"
+compatibility_date = "2026-07-08"
+compatibility_flags = ["nodejs_compat"]
+account_id = "cb27e1a67198789eb42d11ab90737652"
+
+[observability]
+enabled = true
+
+[browser]
+binding = "MYBROWSER"
+
+[[routes]]
+pattern = "designrefs.clubemkt.digital"
+custom_domain = true
